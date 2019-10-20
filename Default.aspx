@@ -66,8 +66,6 @@
     </div>
            
     <div style="width:100%;display:flex;">
-            
-
         <div style="text-align:left;width:50%;">
             <div style="text-align:center;">
                 <u><h4>Enter a 5-digit U.S Zip Code below: </h4></u>
@@ -99,7 +97,7 @@
         </div>
             
         <div style="width:50%;text-align:center;border:solid;border-radius:5px;margin-left:5px;">
-            <u><h4>Past Zip Code Searches:</h4></u>
+            <u><h4>Saved Zip Code List:</h4></u>
             <strong><asp:Label id="lbl_city_list" runat="server"/></strong>
         </div> 
     </div>
