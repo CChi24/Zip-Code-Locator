@@ -16,7 +16,6 @@ namespace Zip_Code_Finder
         //HttpClient is declared as a global variable so we can have access to it in all our functions because
         //we do not want to keep making a new HttpClient object due prevent overworking the server.
         HttpClient httpClient = new HttpClient();
-
         Dictionary<string, string> City_Search_List = new Dictionary<string, string>();
 
         protected void Page_Load(object sender, EventArgs eventArgs)
@@ -102,14 +101,27 @@ namespace Zip_Code_Finder
                 City_Search_List = (Dictionary<string, string>)ViewState["City_List"];
             }
 
-            //add search results to the list.
-            City_Search_List.Add(lbl_zip.Text, lbl_city.Text + "<br/>" + lbl_long_and_lat.Text);
+            //checks the list to make sure the searched zip code is not within the list already. 
+            //If item is in the list, throw a warning that it has already been add. If item is not in the list already, add search results to the list.
+            if (!City_Search_List.ContainsKey(lbl_zip.Text))
+            {
+                City_Search_List.Add(lbl_zip.Text, lbl_city.Text + "<br/>" + lbl_long_and_lat.Text);
 
-            //update the ViewState to have the latest version of the City_Search_List.
-            ViewState["City_List"] = City_Search_List;
+                //update the ViewState to have the latest version of the City_Search_List.
+                ViewState["City_List"] = City_Search_List;
 
-            //call function to print the contents of the City_Search_List.
-            Print_List();
+                //call function to print the contents of the City_Search_List.
+                Print_List();
+
+                lbl_all_alerts.Visible = false;
+                btn_add_to_list.Visible = false;
+                div_city_info.Style.Add("visibility", "hidden");
+            }
+            else
+            {
+                lbl_all_alerts.Text = "The ZIP code has already been added to the list.";
+                lbl_all_alerts.Visible = true;
+            }
 
             btn_add_to_list.Visible = false;
             div_city_info.Style.Add("visibility", "hidden");
